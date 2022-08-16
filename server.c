@@ -80,10 +80,8 @@ int main()
 	socklen_t lenght_client = sizeof(client);
 	
 	float height, weight;
-	
-	int kill = 1;
 
-	while(kill){
+	while(1){
 		clifd = accept(sock_serv, (struct sockaddr *)&client, &lenght_client);
 		if(clifd == -1)
 		{
@@ -115,7 +113,9 @@ int main()
 					{
 						printf("--> %s id %d: exit\n", asctime(timeinfosocket), clifd);
 						fprintf(logfile, "--> %s id %d: exit\n", asctime(timeinfosocket), clifd); 
+						free(buffer);
 						close(clifd); 
+						fclose(logfile);
 						exit(1);
 					}	
 					height = atof(buffer);
@@ -137,7 +137,9 @@ int main()
 					{
 						printf("--> %s id %d: exit\n", asctime(timeinfosocket), clifd); 
 						fprintf(logfile, "--> %s id %d: exit\n", asctime(timeinfosocket), clifd); 
+						free(buffer);
 						close(clifd); 
+						fclose(logfile);
 						exit(1);
 					}
 					weight = atof(buffer);

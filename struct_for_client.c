@@ -26,7 +26,7 @@ int main()
 	char *buffer;
 	buffer = (char*)malloc(SIZE * sizeof(char));
 	
-	puts("\nBasal Insuline Calculatoe");
+	puts("\nBasal Insuline Calculator");
 	
 	while(1)
 	{
