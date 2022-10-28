@@ -43,4 +43,3 @@ void your_basalinsulin(float height, float weight, char **buffer)
 		shmctl(shmid,IPC_RMID,NULL);
 	}
 }
-

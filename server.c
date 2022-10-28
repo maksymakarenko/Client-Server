@@ -79,7 +79,8 @@ int main()
 	struct sockaddr_in client;
 	socklen_t lenght_client = sizeof(client);
 	
-	float height, weight;
+	int height;
+	float weight;
 
 	while(1){
 		clifd = accept(sock_serv, (struct sockaddr *)&client, &lenght_client);
@@ -118,11 +119,14 @@ int main()
 						fclose(logfile);
 						exit(1);
 					}	
-					height = atof(buffer);
-					printf("--> %s id %d: height %s\n", asctime(timeinfosocket), clifd, buffer);
-					fprintf(logfile, "--> %s id %d: height %s\n", asctime(timeinfosocket), clifd, buffer); 
-					memset(buffer, 0, SIZE);
-					i++;
+					else
+					{
+						height = atof(buffer);
+						printf("--> %s id %d: height %d\n", asctime(timeinfosocket), clifd, height);
+						fprintf(logfile, "--> %s id %d: height %d\n", asctime(timeinfosocket), clifd, height); 
+						memset(buffer, 0, SIZE);
+						i++;
+					}
 				}
 				else
 					{
@@ -142,15 +146,18 @@ int main()
 						fclose(logfile);
 						exit(1);
 					}
-					weight = atof(buffer);
-					printf("--> %s id %d: weight %s\n", asctime(timeinfosocket), clifd, buffer);
-					fprintf(logfile, "--> %s id %d: weight %s\n", asctime(timeinfosocket), clifd, buffer);
-					your_basalinsulin(height, weight,  &buffer);
-					printf("--> %s id %d: result %s", asctime(timeinfosocket), clifd, buffer);
-					fprintf(logfile, "--> %s id %d: result %s", asctime(timeinfosocket), clifd, buffer);
-					write(clifd, buffer, strlen(buffer));
-					memset(buffer, 0, SIZE);
-					i = 1;
+					else
+					{
+						weight = atof(buffer);
+						printf("--> %s id %d: weight %f\n", asctime(timeinfosocket), clifd, weight);
+						fprintf(logfile, "--> %s id %d: weight %f\n", asctime(timeinfosocket), clifd, weight);
+						your_basalinsulin(height, weight,  &buffer);
+						printf("--> %s id %d: result %s", asctime(timeinfosocket), clifd, buffer);
+						fprintf(logfile, "--> %s id %d: result %s", asctime(timeinfosocket), clifd, buffer);
+						write(clifd, buffer, strlen(buffer));
+						memset(buffer, 0, SIZE);
+						i = 1;
+					}
 				}
 				else
 					{
